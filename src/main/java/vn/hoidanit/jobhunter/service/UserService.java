@@ -21,32 +21,35 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
-    public User handleUpdateUser(User reqUser) {
-        User currentUser = this.fetchUserById(reqUser.getId());
-        if (currentUser == null) {
-            return null;
-        }
-
-        currentUser.setName(reqUser.getName());
-        currentUser.setEmail((reqUser.getEmail()));
-        currentUser.setPassword(reqUser.getPassword());
-
-        return this.userRepository.save(currentUser);
-    }
-
-    public void deleteUserById(long id) {
+    public void handleDeleteUser(long id) {
         this.userRepository.deleteById(id);
     }
 
     public User fetchUserById(long id) {
-        Optional<User> user = this.userRepository.findById(id);
-        if (user.isPresent()) {
-            return user.get();
+        Optional<User> userOptional = this.userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
         }
         return null;
     }
 
-    public List<User> fetchAllUsers() {
+    public List<User> fetchAllUser() {
         return this.userRepository.findAll();
+    }
+
+    public User handleUpdateUser(User reqUser) {
+        User currentUser = this.fetchUserById(reqUser.getId());
+        if (currentUser != null) {
+            currentUser.setEmail(reqUser.getEmail());
+            currentUser.setName(reqUser.getName());
+            currentUser.setPassword(reqUser.getPassword());
+            // update
+            currentUser = this.userRepository.save(currentUser);
+        }
+        return currentUser;
+    }
+
+    public User handleGetUserByUsername(String username) {
+        return this.userRepository.findByEmail(username);
     }
 }
