@@ -1,6 +1,8 @@
 package vn.hoidanit.jobhunter.config;
 
+import java.util.Optional;
 import java.io.IOException;
+
 import vn.hoidanit.jobhunter.domain.RestResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,7 +34,12 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         RestResponse<Object> res = new RestResponse<Object>();
         res.setStatusCode(HttpStatus.UNAUTHORIZED.value());
-        res.setError(authException.getCause().getMessage());
+
+        String errorMessage = Optional.ofNullable(authException.getCause()) // NULL
+                .map(Throwable::getMessage)
+                .orElse(authException.getMessage());
+        res.setError(errorMessage);
+
         res.setMessage("Token không hợp lệ (hết hạn, không đúng định dạng, hoặc không truyền JWT ở header)...");
 
         mapper.writeValue(response.getWriter(), res);
