@@ -2,6 +2,10 @@ package vn.hoidanit.jobhunter.controller;
 
 import java.util.List;
 
+import vn.hoidanit.jobhunter.domain.User;
+import vn.hoidanit.jobhunter.service.UserService;
+import vn.hoidanit.jobhunter.util.error.IdInvalidException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import vn.hoidanit.jobhunter.domain.User;
-import vn.hoidanit.jobhunter.service.UserService;
-import vn.hoidanit.jobhunter.util.error.IdInvalidException;
 
 @RestController
 public class UserController {

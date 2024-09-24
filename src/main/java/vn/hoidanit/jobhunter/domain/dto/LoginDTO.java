@@ -3,6 +3,7 @@ package vn.hoidanit.jobhunter.domain.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public class LoginDTO {
+
     @NotBlank(message = "Tên tài khoản không được để trống")
     private String username;
 
