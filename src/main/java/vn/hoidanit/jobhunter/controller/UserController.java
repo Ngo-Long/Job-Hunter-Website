@@ -1,13 +1,18 @@
 package vn.hoidanit.jobhunter.controller;
 
-import java.util.List;
+import com.turkraft.springfilter.boot.Filter;
 
 import vn.hoidanit.jobhunter.domain.User;
 import vn.hoidanit.jobhunter.service.UserService;
 import vn.hoidanit.jobhunter.util.error.IdInvalidException;
+import vn.hoidanit.jobhunter.domain.dto.ResultPaginationDTO;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
@@ -46,22 +52,19 @@ public class UserController {
 
         this.userService.handleDeleteUser(id);
         return ResponseEntity.ok("dataUser");
-        // return ResponseEntity.status(HttpStatus.OK).body("dataUser");
     }
 
-    // fetch user by id
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") long id) {
         User fetchUser = this.userService.fetchUserById(id);
-        // return ResponseEntity.ok(fetchUser);
-        return ResponseEntity.status(HttpStatus.OK).body(fetchUser);
+        return ResponseEntity.ok(fetchUser);
     }
 
-    // fetch all users
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUser() {
-        // return ResponseEntity.ok(this.userService.fetchAllUser());
-        return ResponseEntity.status(HttpStatus.OK).body(this.userService.fetchAllUser());
+    public ResponseEntity<ResultPaginationDTO> getUsers(
+            Pageable pageable,
+            @Filter Specification<User> spec) {
+        return ResponseEntity.ok(this.userService.handleFetchUsers(spec, pageable));
     }
 
     @PutMapping("/users")
