@@ -1,28 +1,39 @@
 package vn.hoidanit.jobhunter.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import jakarta.validation.Valid;
+import vn.hoidanit.jobhunter.util.SecurityUtil;
+import vn.hoidanit.jobhunter.domain.User;
 import vn.hoidanit.jobhunter.domain.dto.LoginDTO;
 import vn.hoidanit.jobhunter.domain.dto.ResLoginDTO;
-import vn.hoidanit.jobhunter.util.SecurityUtil;
+import vn.hoidanit.jobhunter.service.UserService;
+
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
 @RestController
+@RequestMapping("/api/v1")
 public class AuthController {
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final UserService userService;
     private final SecurityUtil securityUtil;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public AuthController(AuthenticationManagerBuilder authenticationManagerBuilder, SecurityUtil securityUtil) {
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
+    public AuthController(
+            UserService userService,
+            SecurityUtil securityUtil,
+            AuthenticationManagerBuilder authenticationManagerBuilder) {
+        this.userService = userService;
         this.securityUtil = securityUtil;
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
     @PostMapping("/login")
@@ -39,7 +50,16 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         ResLoginDTO res = new ResLoginDTO();
+
+        User currentUserDB = this.userService.fetchUserByUsername(loginDto.getUsername());
+        ResLoginDTO.UserLogin userLogin = new ResLoginDTO.UserLogin(
+                currentUserDB.getId(),
+                currentUserDB.getEmail(),
+                currentUserDB.getName());
+
+        res.setUser(userLogin);
         res.setAccessToken(access_token);
+
         return ResponseEntity.ok().body(res);
     }
 }
