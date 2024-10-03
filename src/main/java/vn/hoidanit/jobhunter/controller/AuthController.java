@@ -134,20 +134,49 @@ public class AuthController {
 
         @GetMapping("/auth/account")
         @ApiMessage("Fetch a account")
-        public ResponseEntity<ResLoginDTO.UserLogin> getAccount() {
+        public ResponseEntity<ResLoginDTO.UserLogin> getAccount() throws IdInvalidException {
                 String email = SecurityUtil.getCurrentUserLogin().isPresent()
                                 ? SecurityUtil.getCurrentUserLogin().get()
                                 : "";
 
                 User currentUserDB = this.userService.fetchUserByUsername(email);
-
-                ResLoginDTO.UserLogin userLogin = new ResLoginDTO.UserLogin();
-                if (currentUserDB != null) {
-                        userLogin.setId(currentUserDB.getId());
-                        userLogin.setEmail(currentUserDB.getEmail());
-                        userLogin.setName(currentUserDB.getName());
+                if (currentUserDB == null) {
+                        throw new IdInvalidException("Không tìm thấy người dùng!");
                 }
 
+                ResLoginDTO.UserLogin userLogin = new ResLoginDTO.UserLogin();
+                userLogin.setId(currentUserDB.getId());
+                userLogin.setEmail(currentUserDB.getEmail());
+                userLogin.setName(currentUserDB.getName());
+
                 return ResponseEntity.ok().body(userLogin);
+        }
+
+        @PostMapping("/auth/logout")
+        @ApiMessage("Logout user")
+        public ResponseEntity<Void> logout() throws IdInvalidException {
+                String email = SecurityUtil.getCurrentUserLogin().isPresent()
+                                ? SecurityUtil.getCurrentUserLogin().get()
+                                : "";
+
+                if (email.equals("")) {
+                        throw new IdInvalidException("Access Token không hợp lệ!");
+                }
+
+                // update refrech token == null
+                this.userService.updateUserToken(email, null);
+
+                // remove refresh token cookie
+                ResponseCookie deleteSpringCookie = ResponseCookie
+                                .from("refresh_token", null)
+                                .httpOnly(true)
+                                .secure(true)
+                                .path("/")
+                                .maxAge(0)
+                                .build();
+
+                return ResponseEntity.ok()
+                                .header(HttpHeaders.SET_COOKIE, deleteSpringCookie.toString())
+                                .body(null);
         }
 }
