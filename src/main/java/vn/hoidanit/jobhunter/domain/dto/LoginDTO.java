@@ -1,7 +1,11 @@
 package vn.hoidanit.jobhunter.domain.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import jakarta.validation.constraints.NotBlank;
 
+@Getter
+@Setter
 public class LoginDTO {
 
     @NotBlank(message = "Tên tài khoản không được để trống")
@@ -9,21 +13,5 @@ public class LoginDTO {
 
     @NotBlank(message = "Mật khẩu không được để trống")
     private String password;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 }

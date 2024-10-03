@@ -132,7 +132,7 @@ public class UserService {
         return res;
     }
 
-    public void updateUserToken(String token, String email) {
+    public void updateUserToken(String email, String token) {
         User currentUser = this.fetchUserByUsername(email);
         if (currentUser == null) {
             return;
@@ -140,5 +140,9 @@ public class UserService {
 
         currentUser.setRefreshToken(token);
         this.userRepository.save(currentUser);
+    }
+
+    public User getUserByRefreshTokenAndEmail(String token, String email) {
+        return this.userRepository.findByRefreshTokenAndEmail(token, email);
     }
 }
