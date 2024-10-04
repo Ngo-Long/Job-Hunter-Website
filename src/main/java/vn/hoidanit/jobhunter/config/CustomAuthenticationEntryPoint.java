@@ -3,12 +3,12 @@ package vn.hoidanit.jobhunter.config;
 import java.util.Optional;
 import java.io.IOException;
 
-import vn.hoidanit.jobhunter.domain.RestResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import vn.hoidanit.jobhunter.domain.response.RestResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

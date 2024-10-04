@@ -1,7 +1,5 @@
 package vn.hoidanit.jobhunter.util.error;
 
-import vn.hoidanit.jobhunter.domain.RestResponse;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import vn.hoidanit.jobhunter.domain.response.RestResponse;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

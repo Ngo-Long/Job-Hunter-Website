@@ -1,7 +1,7 @@
 package vn.hoidanit.jobhunter.util;
 
 import jakarta.servlet.http.HttpServletResponse;
-import vn.hoidanit.jobhunter.domain.RestResponse;
+import vn.hoidanit.jobhunter.domain.response.RestResponse;
 import vn.hoidanit.jobhunter.util.annotation.ApiMessage;
 
 import org.springframework.core.MethodParameter;
