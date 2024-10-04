@@ -134,7 +134,7 @@ public class AuthController {
 
         @GetMapping("/auth/account")
         @ApiMessage("Fetch a account")
-        public ResponseEntity<ResLoginDTO.UserLogin> getAccount() throws IdInvalidException {
+        public ResponseEntity<ResLoginDTO.UserGetAccount> getAccount() throws IdInvalidException {
                 String email = SecurityUtil.getCurrentUserLogin().isPresent()
                                 ? SecurityUtil.getCurrentUserLogin().get()
                                 : "";
@@ -145,11 +145,14 @@ public class AuthController {
                 }
 
                 ResLoginDTO.UserLogin userLogin = new ResLoginDTO.UserLogin();
+                ResLoginDTO.UserGetAccount userGetAccount = new ResLoginDTO.UserGetAccount();
+
                 userLogin.setId(currentUserDB.getId());
                 userLogin.setEmail(currentUserDB.getEmail());
                 userLogin.setName(currentUserDB.getName());
+                userGetAccount.setUser(userLogin);
 
-                return ResponseEntity.ok().body(userLogin);
+                return ResponseEntity.ok().body(userGetAccount);
         }
 
         @PostMapping("/auth/logout")
