@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import vn.hoidanit.jobhunter.domain.response.RestResponse;
+import vn.hoidanit.jobhunter.domain.response.ResRestDTO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -32,7 +32,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         this.delegate.commence(request, response, authException);
         response.setContentType("application/json;charset=UTF-8");
 
-        RestResponse<Object> res = new RestResponse<Object>();
+        ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(HttpStatus.UNAUTHORIZED.value());
 
         String errorMessage = Optional.ofNullable(authException.getCause()) // NULL

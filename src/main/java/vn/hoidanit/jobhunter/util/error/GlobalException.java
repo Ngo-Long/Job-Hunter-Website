@@ -14,7 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import vn.hoidanit.jobhunter.domain.response.RestResponse;
+import vn.hoidanit.jobhunter.domain.response.ResRestDTO;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,8 +28,8 @@ public class GlobalException {
             IdInvalidException.class
     })
 
-    public ResponseEntity<RestResponse<Object>> handleIdException(Exception ex) {
-        RestResponse<Object> res = new RestResponse<Object>();
+    public ResponseEntity<ResRestDTO<Object>> handleIdException(Exception ex) {
+        ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
         res.setError(ex.getMessage());
         res.setMessage("Thông tin đăng nhập không hợp lệ!");
@@ -40,8 +40,8 @@ public class GlobalException {
     @ExceptionHandler(value = {
             NoResourceFoundException.class,
     })
-    public ResponseEntity<RestResponse<Object>> handleNotFoundException(Exception ex) {
-        RestResponse<Object> res = new RestResponse<Object>();
+    public ResponseEntity<ResRestDTO<Object>> handleNotFoundException(Exception ex) {
+        ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(HttpStatus.NOT_FOUND.value());
         res.setError(ex.getMessage());
         res.setMessage("404 Not Found. URL may not exist...");
@@ -49,11 +49,11 @@ public class GlobalException {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<RestResponse<Object>> validationError(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ResRestDTO<Object>> validationError(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();
         final List<FieldError> fieldErrors = result.getFieldErrors();
 
-        RestResponse<Object> res = new RestResponse<Object>();
+        ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
         res.setError(ex.getBody().getDetail());
 

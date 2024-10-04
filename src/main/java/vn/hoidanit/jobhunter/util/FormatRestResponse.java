@@ -1,7 +1,7 @@
 package vn.hoidanit.jobhunter.util;
 
 import jakarta.servlet.http.HttpServletResponse;
-import vn.hoidanit.jobhunter.domain.response.RestResponse;
+import vn.hoidanit.jobhunter.domain.response.ResRestDTO;
 import vn.hoidanit.jobhunter.util.annotation.ApiMessage;
 
 import org.springframework.core.MethodParameter;
@@ -33,7 +33,7 @@ public class FormatRestResponse implements ResponseBodyAdvice<Object> {
         HttpServletResponse servletResponse = ((ServletServerHttpResponse) response).getServletResponse();
         int status = servletResponse.getStatus();
 
-        RestResponse<Object> res = new RestResponse<Object>();
+        ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(status);
 
         if (body instanceof String) {
