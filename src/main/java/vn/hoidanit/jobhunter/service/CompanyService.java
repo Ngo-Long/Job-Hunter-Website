@@ -9,16 +9,20 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import vn.hoidanit.jobhunter.domain.Company;
+import vn.hoidanit.jobhunter.domain.User;
 import vn.hoidanit.jobhunter.domain.response.ResultPaginationDTO;
 import vn.hoidanit.jobhunter.domain.response.ResultPaginationDTO.Meta;
 import vn.hoidanit.jobhunter.repository.CompanyRepository;
+import vn.hoidanit.jobhunter.repository.UserRepository;
 
 @Service
 public class CompanyService {
 
+    private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
 
-    public CompanyService(CompanyRepository companyRepository) {
+    public CompanyService(UserRepository userRepository, CompanyRepository companyRepository) {
+        this.userRepository = userRepository;
         this.companyRepository = companyRepository;
     }
 
@@ -27,6 +31,15 @@ public class CompanyService {
     }
 
     public void handleDeleteCompany(long id) {
+        Optional<Company> comOptional = this.companyRepository.findById(id);
+        if (comOptional.isPresent()) {
+            Company com = comOptional.get();
+
+            // fetch all user belong to this company
+            List<User> users = this.userRepository.findByCompany(com);
+            this.userRepository.deleteAll(users);
+        }
+
         this.companyRepository.deleteById(id);
     }
 
@@ -45,6 +58,15 @@ public class CompanyService {
         rs.setResult(pageCompany.getContent());
 
         return rs;
+    }
+
+    public Optional<Company> fetchCompanyOptionalById(long id) {
+        Optional<Company> companyOptional = this.companyRepository.findById(id);
+        if (companyOptional.isPresent()) {
+            return companyOptional;
+        }
+
+        return null;
     }
 
     public Company fetchCompanyById(long id) {

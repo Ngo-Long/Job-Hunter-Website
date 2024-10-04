@@ -13,7 +13,4 @@ public class ResRestDTO<T> {
     // message can be string, or arrayList
     private Object message;
     private T data;
-
-
-
 }

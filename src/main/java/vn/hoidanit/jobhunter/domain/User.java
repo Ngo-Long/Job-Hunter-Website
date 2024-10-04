@@ -10,6 +10,8 @@ import vn.hoidanit.jobhunter.util.constant.GenderEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,6 +50,10 @@ public class User {
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String refreshToken;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss a", timezone = "GMT+7")
     private Instant createdAt;

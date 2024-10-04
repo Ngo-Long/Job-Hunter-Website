@@ -58,6 +58,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.convertToResCreateUserDTO(newUser));
     }
 
+    @PutMapping("/users")
+    public ResponseEntity<ResUpdateUserDTO> updateUser(@RequestBody User dataUser) throws IdInvalidException {
+        User updateUser = this.userService.handleUpdateUser(dataUser);
+        if (updateUser == null) {
+            throw new IdInvalidException("Người dùng không tồn tại!");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(this.userService.convertToResUpdateUserDTO(updateUser));
+    }
+
     @DeleteMapping("/users/{id}")
     @ApiMessage("Delete a new user")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") long id)
@@ -90,14 +100,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(this.userService.handleFetchUsers(spec, pageable));
     }
 
-    @PutMapping("/users")
-    public ResponseEntity<ResUpdateUserDTO> updateUser(@RequestBody User dataUser) throws IdInvalidException {
-        User updateUser = this.userService.handleUpdateUser(dataUser);
-        if (updateUser == null) {
-            throw new IdInvalidException("Người dùng không tồn tại!");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(this.userService.convertToResUpdateUserDTO(updateUser));
-    }
+  
 
 }
