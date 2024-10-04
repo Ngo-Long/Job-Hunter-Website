@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import java.time.Instant;
 import vn.hoidanit.jobhunter.util.SecurityUtil;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;

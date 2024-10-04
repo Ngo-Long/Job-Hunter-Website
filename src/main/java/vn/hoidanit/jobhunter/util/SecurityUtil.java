@@ -10,9 +10,9 @@ import javax.crypto.spec.SecretKeySpec;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import vn.hoidanit.jobhunter.domain.dto.ResLoginDTO.UserLogin;
-
 import com.nimbusds.jose.util.Base64;
+
+import vn.hoidanit.jobhunter.domain.response.ResLoginDTO.UserLogin;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;

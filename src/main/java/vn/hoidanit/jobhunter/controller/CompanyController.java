@@ -4,10 +4,10 @@ import jakarta.validation.Valid;
 import com.turkraft.springfilter.boot.Filter;
 
 import vn.hoidanit.jobhunter.domain.Company;
+import vn.hoidanit.jobhunter.domain.response.ResultPaginationDTO;
 import vn.hoidanit.jobhunter.service.CompanyService;
 import vn.hoidanit.jobhunter.util.annotation.ApiMessage;
 import vn.hoidanit.jobhunter.util.error.IdInvalidException;
-import vn.hoidanit.jobhunter.domain.dto.ResultPaginationDTO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
