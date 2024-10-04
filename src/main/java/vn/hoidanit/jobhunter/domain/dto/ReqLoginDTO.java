@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class LoginDTO {
+public class ReqLoginDTO {
 
     @NotBlank(message = "Tên tài khoản không được để trống")
     private String username;
