@@ -3,24 +3,23 @@ package vn.hoidanit.jobhunter.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import vn.hoidanit.jobhunter.util.SecurityUtil;
+import java.time.Instant;
 
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotBlank;
+
+import vn.hoidanit.jobhunter.util.SecurityUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "companies")
 @Entity
@@ -44,6 +43,10 @@ public class Company {
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     @JsonIgnore
     List<User> users;
+
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<Job> jobs;
 
     private Instant createdAt;
 

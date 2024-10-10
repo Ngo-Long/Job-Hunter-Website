@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    @ApiMessage("Delete a new user")
+    @ApiMessage("Delete a user")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") long id)
             throws IdInvalidException {
         User currentUser = this.userService.fetchUserById(id);
@@ -99,7 +99,5 @@ public class UserController {
             @Filter Specification<User> spec) {
         return ResponseEntity.status(HttpStatus.OK).body(this.userService.handleFetchUsers(spec, pageable));
     }
-
-  
 
 }

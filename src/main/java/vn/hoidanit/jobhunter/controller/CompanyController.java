@@ -50,8 +50,9 @@ public class CompanyController {
 
     @DeleteMapping("/companies/{id}")
     public ResponseEntity<String> deleteCompanyById(@PathVariable("id") Long id) throws IdInvalidException {
-        if (id <= 0) {
-            throw new IdInvalidException("Không tìm thấy công ty để xóa");
+        Company currentCompany = this.companyService.fetchCompanyById(id);
+        if (currentCompany == null) {
+            throw new IdInvalidException("Công ty không tồn tại!");
         }
 
         this.companyService.handleDeleteCompany(id);
