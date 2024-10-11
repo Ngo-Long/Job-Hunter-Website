@@ -7,6 +7,7 @@ import java.time.Instant;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,12 +26,15 @@ import vn.hoidanit.jobhunter.util.constant.ResumeStateEnum;
 @Getter
 @Setter
 public class Resume {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "Email không được để trống!")
     private String email;
 
+    @NotBlank(message = "Url không được để trống (upload cv chưa thành công)!")
     private String url;
 
     @Enumerated(EnumType.STRING)
