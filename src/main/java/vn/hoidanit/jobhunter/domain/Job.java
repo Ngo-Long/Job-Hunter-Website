@@ -56,6 +56,7 @@ public class Job {
     private Instant startDate;
     private Instant endDate;
     private boolean active;
+
     private Instant createdAt;
     private Instant updatedAt;
     private String createdBy;

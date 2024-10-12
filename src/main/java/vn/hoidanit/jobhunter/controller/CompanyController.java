@@ -52,7 +52,7 @@ public class CompanyController {
     public ResponseEntity<String> deleteCompanyById(@PathVariable("id") Long id) throws IdInvalidException {
         Company currentCompany = this.companyService.fetchCompanyById(id);
         if (currentCompany == null) {
-            throw new IdInvalidException("Công ty không tồn tại!");
+            throw new IdInvalidException("Company with id = " + id + " not found!");
         }
 
         this.companyService.handleDeleteCompany(id);
@@ -60,9 +60,10 @@ public class CompanyController {
     }
 
     @GetMapping("companies/{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable("id") Long id) throws IdInvalidException {
-        if (id <= 0) {
-            throw new IdInvalidException("Không tìm thấy công ty để xóa");
+    public ResponseEntity<Company> getCompanyById(@PathVariable("id") long id) throws IdInvalidException {
+        Company currentCompany = this.companyService.fetchCompanyById(id);
+        if (currentCompany == null) {
+            throw new IdInvalidException("Company with id = " + id + " not found!");
         }
 
         Company dataCompany = this.companyService.fetchCompanyById(id);
