@@ -3,56 +3,48 @@ package vn.hoidanit.jobhunter.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.time.Instant;
+
+import vn.hoidanit.jobhunter.util.SecurityUtil;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.PreUpdate;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotBlank;
 
-import vn.hoidanit.jobhunter.util.SecurityUtil;
-import vn.hoidanit.jobhunter.util.constant.ResumeStateEnum;
-
 @Entity
-@Table(name = "resumes")
+@Table(name = "roles")
 @Getter
 @Setter
-public class Resume {
-
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "Email không được để trống!")
-    private String email;
+    @NotBlank(message = "Tên không được để trống!")
+    private String name;
 
-    @NotBlank(message = "Url không được để trống (upload cv chưa thành công)!")
-    private String url;
-
-    @Enumerated(EnumType.STRING)
-    private ResumeStateEnum status;
-
+    private String description;
+    private boolean active;
     private Instant createdAt;
     private Instant updatedAt;
-
     private String createdBy;
     private String updatedBy;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "job_id")
-    private Job job;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "roles" })
+    @JoinTable(name = "permission_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private List<Permission> permissions;
 
     @PrePersist
     public void handleBeforeCreate() {
@@ -71,5 +63,4 @@ public class Resume {
 
         this.updatedAt = Instant.now();
     }
-
 }
