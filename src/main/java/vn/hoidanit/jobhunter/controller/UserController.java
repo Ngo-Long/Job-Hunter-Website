@@ -55,7 +55,9 @@ public class UserController {
         dataUser.setPassword(hashPassword);
 
         User newUser = this.userService.handleCreateUser(dataUser);
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.convertToResCreateUserDTO(newUser));
+        ResCreateUserDTO res = this.userService.convertToResCreateUserDTO(newUser);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
     @PutMapping("/users")
@@ -65,7 +67,7 @@ public class UserController {
             throw new IdInvalidException("Người dùng không tồn tại!");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(this.userService.convertToResUpdateUserDTO(updateUser));
+        return ResponseEntity.ok(this.userService.convertToResUpdateUserDTO(updateUser));
     }
 
     @DeleteMapping("/users/{id}")
@@ -89,7 +91,7 @@ public class UserController {
             throw new IdInvalidException("Người dùng không tồn tại!");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(this.userService.convertToResUserDTO(fetchUser));
+        return ResponseEntity.ok(this.userService.convertToResUserDTO(fetchUser));
     }
 
     @GetMapping("/users")
@@ -97,7 +99,7 @@ public class UserController {
     public ResponseEntity<ResultPaginationDTO> getUsers(
             Pageable pageable,
             @Filter Specification<User> spec) {
-        return ResponseEntity.status(HttpStatus.OK).body(this.userService.handleFetchUsers(spec, pageable));
+        return ResponseEntity.ok(this.userService.handleFetchUsers(spec, pageable));
     }
 
 }

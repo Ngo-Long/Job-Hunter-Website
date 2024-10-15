@@ -39,7 +39,7 @@ public class PermissionController {
     public ResponseEntity<Permission> createNewPermission(@Valid @RequestBody Permission dataPermission)
             throws IdInvalidException {
         if (this.permissionService.isPermissionExist(dataPermission)) {
-            throw new IdInvalidException("Permission already exists!");
+            throw new IdInvalidException("Permission đã tồn tại!");
         }
 
         // create new permission
@@ -52,13 +52,21 @@ public class PermissionController {
     public ResponseEntity<Permission> updatePermission(@Valid @RequestBody Permission dataPermission)
             throws IdInvalidException {
         // check exist by id
-        if (this.permissionService.fetchById(dataPermission.getId()) == null) {
+        if (this.permissionService.fetchPermissionById(dataPermission.getId()) == null) {
             throw new IdInvalidException("Permission with id = " + dataPermission.getId() + " not found!");
         }
 
         // check exist by module, apiPath and method
         if (this.permissionService.isPermissionExist(dataPermission)) {
-            throw new IdInvalidException("Permission already exists!");
+            // check name
+            if (this.permissionService.isSameName(dataPermission)) {
+                throw new IdInvalidException("Permission đã tồn tại!");
+            }
+        }
+
+        // check exist by module, apiPath and method
+        if (this.permissionService.isPermissionExist(dataPermission)) {
+            throw new IdInvalidException("Permission đã tồn tại!");
         }
 
         // update permission
@@ -70,7 +78,7 @@ public class PermissionController {
     @ApiMessage("delete a permission")
     public ResponseEntity<Void> delete(@PathVariable("id") long id) throws IdInvalidException {
         // check exist by id
-        if (this.permissionService.fetchById(id) == null) {
+        if (this.permissionService.fetchPermissionById(id) == null) {
             throw new IdInvalidException("Permission with id = " + id + " not found!");
         }
 

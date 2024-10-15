@@ -67,13 +67,13 @@ public class CompanyController {
         }
 
         Company dataCompany = this.companyService.fetchCompanyById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(dataCompany);
+        return ResponseEntity.ok().body(dataCompany);
     }
 
     @PutMapping("companies")
     public ResponseEntity<Company> updateCompany(@Valid @RequestBody Company reqCompany) {
         Company dataCompany = this.companyService.handleUpdateCompany(reqCompany);
-        return ResponseEntity.ok(dataCompany);
+        return ResponseEntity.ok().body(dataCompany);
     }
 
 }

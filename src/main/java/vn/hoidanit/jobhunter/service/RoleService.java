@@ -46,15 +46,17 @@ public class RoleService {
         return this.roleRepository.save(dataRole);
     }
 
-    public Role fetchById(long id) {
+    public Role fetchRoleById(long id) {
         Optional<Role> roleOptional = this.roleRepository.findById(id);
-        if (roleOptional.isPresent())
+        if (roleOptional.isPresent()) {
             return roleOptional.get();
+        }
+
         return null;
     }
 
     public Role handleUpdateRole(Role dataRole) {
-        Role roleDB = this.fetchById(dataRole.getId());
+        Role roleDB = this.fetchRoleById(dataRole.getId());
 
         // check permissions
         if (dataRole.getPermissions() != null) {
@@ -70,7 +72,7 @@ public class RoleService {
         roleDB.setDescription(dataRole.getDescription());
         roleDB.setActive(dataRole.isActive());
         roleDB.setPermissions(dataRole.getPermissions());
-        roleDB = this.roleRepository.save(roleDB);
+        this.roleRepository.save(roleDB);
 
         return roleDB;
     }
