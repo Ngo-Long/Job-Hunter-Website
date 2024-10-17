@@ -3,6 +3,8 @@ package vn.hoidanit.jobhunter.util.error;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import vn.hoidanit.jobhunter.domain.response.ResRestDTO;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -13,8 +15,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-
-import vn.hoidanit.jobhunter.domain.response.ResRestDTO;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,7 +27,6 @@ public class GlobalException {
             BadCredentialsException.class,
             IdInvalidException.class
     })
-
     public ResponseEntity<ResRestDTO<Object>> handleIdException(Exception ex) {
         ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
@@ -72,5 +71,16 @@ public class GlobalException {
         res.setError(ex.getMessage());
         res.setMessage("Exception upload file...");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+    }
+
+    @ExceptionHandler(value = {
+            PermissionException.class,
+    })
+    public ResponseEntity<ResRestDTO<Object>> handlePermissionException(Exception ex) {
+        ResRestDTO<Object> res = new ResRestDTO<Object>();
+        res.setStatusCode(HttpStatus.FORBIDDEN.value());
+        res.setMessage("Forbidden");
+        res.setError(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(res);
     }
 }
