@@ -22,6 +22,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @RestControllerAdvice
 public class GlobalException {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ResRestDTO<Object>> handleAllException(Exception ex) {
+        ResRestDTO<Object> res = new ResRestDTO<Object>();
+        res.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        res.setMessage(ex.getMessage());
+        res.setError("Internal Server Error");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(res);
+    }
+
     @ExceptionHandler(value = {
             UsernameNotFoundException.class,
             BadCredentialsException.class,
@@ -30,8 +39,8 @@ public class GlobalException {
     public ResponseEntity<ResRestDTO<Object>> handleIdException(Exception ex) {
         ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
-        res.setError(ex.getMessage());
-        res.setMessage("Thông tin đăng nhập không hợp lệ!");
+        res.setMessage(ex.getMessage());
+        res.setError("Thông tin đăng nhập không hợp lệ!");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
@@ -42,8 +51,8 @@ public class GlobalException {
     public ResponseEntity<ResRestDTO<Object>> handleNotFoundException(Exception ex) {
         ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(HttpStatus.NOT_FOUND.value());
-        res.setError(ex.getMessage());
-        res.setMessage("404 Not Found. URL may not exist...");
+        res.setMessage(ex.getMessage());
+        res.setError("404 Not Found. URL may not exist...");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
 
@@ -68,8 +77,8 @@ public class GlobalException {
     public ResponseEntity<ResRestDTO<Object>> handleFileUploadException(Exception ex) {
         ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
-        res.setError(ex.getMessage());
-        res.setMessage("Exception upload file...");
+        res.setMessage(ex.getMessage());
+        res.setError("Exception upload file...");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
 
@@ -79,8 +88,8 @@ public class GlobalException {
     public ResponseEntity<ResRestDTO<Object>> handlePermissionException(Exception ex) {
         ResRestDTO<Object> res = new ResRestDTO<Object>();
         res.setStatusCode(HttpStatus.FORBIDDEN.value());
-        res.setMessage("Forbidden");
-        res.setError(ex.getMessage());
+        res.setError("Forbidden");
+        res.setMessage(ex.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(res);
     }
 }
