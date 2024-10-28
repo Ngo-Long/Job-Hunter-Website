@@ -10,6 +10,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+/**
+ * The UserDetailsService is a cornerstone of user management in Spring
+ * Security, providing a seamless bridge between your user data and Spring
+ * Security's authentication mechanism. By implementing a custom
+ * UserDetailsService, developers gain fine-grained control over loading user
+ * details, enabling robust and flexible authentication workflows.
+ */
 @Component("userDetailsService")
 public class UserDetailsCustom implements UserDetailsService {
 

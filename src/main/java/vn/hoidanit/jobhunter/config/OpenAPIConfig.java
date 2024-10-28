@@ -12,6 +12,10 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 
+/**
+ * Run application and find the OpenAPI descriptions at /v3/api-docs
+ * which is the default path: http://localhost:8080/v3/api-docs
+ */
 @Configuration
 public class OpenAPIConfig {
 

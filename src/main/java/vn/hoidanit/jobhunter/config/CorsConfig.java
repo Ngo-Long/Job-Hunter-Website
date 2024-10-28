@@ -4,10 +4,16 @@ import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+/**
+ * Cross-Origin Resource Sharing (CORS)\
+ * CorsConfigurationSource: configure CORS to override the default Spring
+ * Security CORS handling
+ */
 @Configuration
 public class CorsConfig {
 
@@ -35,6 +41,7 @@ public class CorsConfig {
 
         // cấu hình cors cho tất cả api
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 }

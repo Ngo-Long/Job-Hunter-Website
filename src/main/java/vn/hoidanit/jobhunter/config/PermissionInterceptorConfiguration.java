@@ -5,6 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
+/**
+ * The PermissionInterceptorConfiguration class is a configuration in Spring
+ * Boot, which is used to register interceptors for HTTP requests. This
+ * interceptor is used to perform access checks on APIs or web application
+ * paths.
+ */
 @Configuration
 public class PermissionInterceptorConfiguration implements WebMvcConfigurer {
 

@@ -4,6 +4,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.nimbusds.jose.util.Base64;
+
+import jakarta.persistence.Converts;
+
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
 import vn.hoidanit.jobhunter.util.SecurityUtil;
@@ -66,6 +69,11 @@ public class SecurityConfiguration {
         };
     }
 
+    /**
+     * The jwtAuthenticationConverter method configures how Spring Security converts
+     * permissions from a JWT token, getting the permission from the "permission"
+     * field in the token and not prefixing the permission.
+     */
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
@@ -77,6 +85,41 @@ public class SecurityConfiguration {
         return jwtAuthenticationConverter;
     }
 
+    /**
+     * Configures a security filter chain that applies to incoming HTTP requests
+     * to determine whether security should be enforced for the request.
+     * 
+     * - Disables CSRF (Cross-Site Request Forgery) protection since the application
+     * may primarily expose APIs that are not susceptible to CSRF attacks.
+     * - Enables CORS (Cross-Origin Resource Sharing) to allow requests from
+     * different origins
+     * with default settings.
+     * - Configures HTTP request authorization using `authorizeHttpRequests`, which
+     * allows
+     * public access to certain paths (whitelisted) while securing other routes.
+     * - Uses `oauth2ResourceServer` with JWT support for resource protection,
+     * ensuring
+     * that users must provide valid JWT tokens to access secured resources.
+     * - Disables the default form-based login provided by Spring Security since
+     * authentication is handled via OAuth2 and JWT.
+     * - Configures session management to be stateless
+     * (`SessionCreationPolicy.STATELESS`),
+     * meaning the application does not maintain server-side sessions for each user,
+     * which is ideal for stateless REST APIs.
+     *
+     * @param http                           The HttpSecurity object used to
+     *                                       configure HTTP security settings.
+     * @param customAuthenticationEntryPoint The entry point used to handle
+     *                                       authentication errors, such as when
+     *                                       a user attempts to access a secured
+     *                                       resource
+     *                                       without proper authentication.
+     *
+     * @return SecurityFilterChain The security configuration object that defines
+     *         the filters applied to HTTP requests.
+     * @throws Exception If an error occurs during the security configuration
+     *                   process.
+     */
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity http,

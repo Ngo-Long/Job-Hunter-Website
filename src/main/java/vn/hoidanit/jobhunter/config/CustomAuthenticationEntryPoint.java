@@ -3,12 +3,13 @@ package vn.hoidanit.jobhunter.config;
 import java.util.Optional;
 import java.io.IOException;
 
+import vn.hoidanit.jobhunter.domain.response.ResRestDTO;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import vn.hoidanit.jobhunter.domain.response.ResRestDTO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 
+/**
+ * AuthenticationEntryPoint is a way for your Spring application to react
+ * when someone tries to access a part of your site or API without the
+ * necessary permissions. It's like a doorkeeper that decides what to do
+ * with visitors who still need an invite to the party.
+ */
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

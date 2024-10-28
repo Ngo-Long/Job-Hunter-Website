@@ -63,10 +63,6 @@ public class SecurityUtil {
         // hardcode permission (for testing)
         List<String> listAuthority = Arrays.asList("ROLE_USER_CREATE", "ROLE_USER_UPDATE");
 
-        // List<String> listAuthority = new ArrayList<String>();
-        // listAuthority.add("ROLE_USER_CREATE");
-        // listAuthority.add("ROLE_USER_UPDATE");
-
         // @formatter:off
         JwtClaimsSet claims = JwtClaimsSet.builder()
             .issuedAt(now)

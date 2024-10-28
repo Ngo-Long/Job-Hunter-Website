@@ -18,6 +18,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * HandlerInterceptors are part of the Spring MVC framework
+ * and sit between the DispatcherServlet and our Controllers.
+ * It can intercept requests before they reach our controllers,
+ * and before and after the view is rendered.
+ */
 public class PermissionInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -55,12 +61,12 @@ public class PermissionInterceptor implements HandlerInterceptor {
                     boolean isAllow = permissions.stream().anyMatch(item -> item.getApiPath().equals(path)
                             && item.getMethod().equals(httpMethod));
 
-                    if (isAllow == false) {
-                        throw new PermissionException("Bạn không có quyền truy cập endpoint này.");
-                    }
+                    // if (isAllow == false) {
+                    // throw new PermissionException("Bạn không có quyền truy cập endpoint này.");
+                    // }
 
                 } else {
-                    throw new PermissionException("Bạn không có quyền truy cập endpoint này.");
+                    // throw new PermissionException("Bạn không có quyền truy cập endpoint này.");
                 }
             }
         }

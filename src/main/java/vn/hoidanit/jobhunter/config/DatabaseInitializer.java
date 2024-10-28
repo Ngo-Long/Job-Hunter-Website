@@ -15,6 +15,13 @@ import vn.hoidanit.jobhunter.repository.RoleRepository;
 import vn.hoidanit.jobhunter.repository.UserRepository;
 import vn.hoidanit.jobhunter.repository.PermissionRepository;
 
+/**
+ * CommandLineRunner is an interface provided by Spring Boot
+ * that can be used to execute code after the Spring application context
+ * is fully initialized but before the application is completely started.
+ * This means that any bean implementing this interface will have its run
+ * method invoked with the command-line arguments passed to the application.
+ */
 @Service
 public class DatabaseInitializer implements CommandLineRunner {
 
