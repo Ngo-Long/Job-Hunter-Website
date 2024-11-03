@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter.controller;
+package vn.hoidanit.jobhunter.controller.client;
 
 import java.util.List;
 import java.util.Arrays;

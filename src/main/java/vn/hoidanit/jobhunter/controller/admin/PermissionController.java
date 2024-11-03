@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter.controller;
+package vn.hoidanit.jobhunter.controller.admin;
 
 import vn.hoidanit.jobhunter.domain.Permission;
 import vn.hoidanit.jobhunter.service.PermissionService;

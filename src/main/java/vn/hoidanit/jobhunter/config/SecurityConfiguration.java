@@ -37,7 +37,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
-    @Value("${hoidanit.jwt.base64-secret}")
+    @Value("${jobhunter.jwt.base64-secret}")
     private String jwtKey;
 
     @Bean
@@ -88,7 +88,7 @@ public class SecurityConfiguration {
     /**
      * Configures a security filter chain that applies to incoming HTTP requests
      * to determine whether security should be enforced for the request.
-     * 
+     *
      * - Disables CSRF (Cross-Site Request Forgery) protection since the application
      * may primarily expose APIs that are not susceptible to CSRF attacks.
      * - Enables CORS (Cross-Origin Resource Sharing) to allow requests from

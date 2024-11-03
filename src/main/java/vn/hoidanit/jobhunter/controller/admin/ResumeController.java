@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter.controller;
+package vn.hoidanit.jobhunter.controller.admin;
 
 import vn.hoidanit.jobhunter.service.UserService;
 import vn.hoidanit.jobhunter.service.ResumeService;

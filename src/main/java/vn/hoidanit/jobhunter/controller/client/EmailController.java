@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter.controller;
+package vn.hoidanit.jobhunter.controller.client;
 
 import jakarta.transaction.Transactional;
 
@@ -24,8 +24,7 @@ public class EmailController {
     @ApiMessage("Send simple email")
     // @Scheduled(cron = "*/30 * * * * *")
     // @Transactional
-    public String sendSimpleEmail() {
+    public void sendSimpleEmail() {
         this.subscriberService.sendSubscribersEmailJobs();
-        return "Ok";
     }
 }

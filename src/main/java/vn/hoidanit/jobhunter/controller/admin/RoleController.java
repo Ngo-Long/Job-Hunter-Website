@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter.controller;
+package vn.hoidanit.jobhunter.controller.admin;
 
 import vn.hoidanit.jobhunter.service.RoleService;
 import vn.hoidanit.jobhunter.domain.Role;

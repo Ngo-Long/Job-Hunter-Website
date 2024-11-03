@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter.controller;
+package vn.hoidanit.jobhunter.controller.client;
 
 import jakarta.validation.Valid;
 
@@ -37,7 +37,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 @RequestMapping("/api/v1")
 public class AuthController {
 
-    @Value("${hoidanit.jwt.refresh-token-validity-in-seconds}")
+    @Value("${jobhunter.jwt.refresh-token-validity-in-seconds}")
     private long refreshTokenExpiration;
 
     private final UserService userService;

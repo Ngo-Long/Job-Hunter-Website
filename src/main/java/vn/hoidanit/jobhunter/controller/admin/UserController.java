@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter.controller;
+package vn.hoidanit.jobhunter.controller.admin;
 
 import com.turkraft.springfilter.boot.Filter;
 
