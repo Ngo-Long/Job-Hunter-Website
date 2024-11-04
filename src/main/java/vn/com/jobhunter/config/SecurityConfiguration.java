@@ -124,9 +124,10 @@ public class SecurityConfiguration {
             HttpSecurity http,
             CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
         String[] whiteList = {
-                "/", "/storage/**", "/api/v1/email/**",
-                "/api/v1/auth/login", "/api/v1/auth/refresh", "/api/v1/auth/register",
-                "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html"
+                "/", "/storage/**", "/v3/api-docs/**",               
+                "/swagger-ui/**", "/swagger-ui.html",
+                "/api/v1/email/**", "/api/v1/auth/login", 
+                "/api/v1/auth/refresh", "/api/v1/auth/register"
         };
 
         http
@@ -135,9 +136,10 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         authz -> authz
                                 .requestMatchers(whiteList).permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/v1/companies/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/news/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/jobs/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/skills/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/companies/**").permitAll()
                                 .anyRequest().authenticated())
 
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults())

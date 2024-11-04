@@ -1,0 +1,32 @@
+package vn.com.jobhunter.domain.response.news;
+
+import lombok.Getter;
+import lombok.Setter;
+import vn.com.jobhunter.util.constant.NewsStateEnum;
+
+import java.time.Instant;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+@Getter
+@Setter
+public class ResCreateNewsDTO {
+
+    private long id;
+    private String title;
+    
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String content;    
+    
+    private String author;
+    private String image;
+    private String category;
+    
+    @Enumerated(EnumType.STRING)
+    private NewsStateEnum status;
+    
+    private Instant CreateAt;
+    private String createdBy;
+}

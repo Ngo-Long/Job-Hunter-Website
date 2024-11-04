@@ -88,6 +88,37 @@ public class UserService {
 
         return null;
     }
+    
+    public ResUserDTO convertToResUserDTO(User user) {
+        // create response user DTO
+        ResUserDTO res = new ResUserDTO();
+        res.setId(user.getId());
+        res.setAge(user.getAge());
+        res.setName(user.getName());
+        res.setEmail(user.getEmail());
+        res.setGender(user.getGender());
+        res.setAddress(user.getAddress());
+        res.setCreatedAt(user.getCreatedAt());
+        res.setUpdatedAt(user.getUpdatedAt());
+
+        // create response company user DTO
+        ResUserDTO.CompanyUser companyUser = new ResUserDTO.CompanyUser();
+        if (user.getCompany() != null) {
+            companyUser.setId(user.getCompany().getId());
+            companyUser.setName(user.getCompany().getName());
+            res.setCompany(companyUser);
+        }
+
+        // create response role user DTO
+        ResUserDTO.RoleUser roleUser = new ResUserDTO.RoleUser();
+        if (user.getRole() != null) {
+            roleUser.setId(user.getRole().getId());
+            roleUser.setName(user.getRole().getName());
+            res.setRole(roleUser);
+        }
+
+        return res;
+    }
 
     public ResultPaginationDTO handleFetchUsers(Specification<User> spec, Pageable pageable) {
         Page<User> pageUser = this.userRepository.findAll(spec, pageable);
@@ -136,37 +167,6 @@ public class UserService {
             com.setId(user.getCompany().getId());
             com.setName(user.getCompany().getName());
             res.setCompany(com);
-        }
-
-        return res;
-    }
-
-    public ResUserDTO convertToResUserDTO(User user) {
-        // create response user DTO
-        ResUserDTO res = new ResUserDTO();
-        res.setId(user.getId());
-        res.setAge(user.getAge());
-        res.setName(user.getName());
-        res.setEmail(user.getEmail());
-        res.setGender(user.getGender());
-        res.setAddress(user.getAddress());
-        res.setCreatedAt(user.getCreatedAt());
-        res.setUpdatedAt(user.getUpdatedAt());
-
-        // create response company user DTO
-        ResUserDTO.CompanyUser companyUser = new ResUserDTO.CompanyUser();
-        if (user.getCompany() != null) {
-            companyUser.setId(user.getCompany().getId());
-            companyUser.setName(user.getCompany().getName());
-            res.setCompany(companyUser);
-        }
-
-        // create response role user DTO
-        ResUserDTO.RoleUser roleUser = new ResUserDTO.RoleUser();
-        if (user.getRole() != null) {
-            roleUser.setId(user.getRole().getId());
-            roleUser.setName(user.getRole().getName());
-            res.setRole(roleUser);
         }
 
         return res;
