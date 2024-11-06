@@ -33,13 +33,13 @@ import vn.com.jobhunter.util.error.IdInvalidException;
 @RequestMapping("/api/v1")
 public class NewsController {
 
-	private NewsService newsService;
-	
-	public NewsController(NewsService newsService) {
-		this.newsService = newsService;
-	}
-	
-	@PostMapping("/news")
+    private NewsService newsService;
+
+    public NewsController(NewsService newsService) {
+        this.newsService = newsService;
+    }
+
+    @PostMapping("/news")
     @ApiMessage("Create a new news")
     public ResponseEntity<ResCreateNewsDTO> createNews(@Valid @RequestBody News dataNews)
             throws IdInvalidException {
@@ -47,23 +47,23 @@ public class NewsController {
         if (isTitleExist) {
             throw new IdInvalidException("Tiêu đề đã tồn tại, vui lòng sử dụng tiêu đề khác!");
         }
-        
-        ResCreateNewsDTO newNews = this.newsService.handleCreateNews(dataNews);       
+
+        ResCreateNewsDTO newNews = this.newsService.handleCreateNews(dataNews);
         return ResponseEntity.status(HttpStatus.CREATED).body(newNews);
     }
 
     @PutMapping("/news")
-    public ResponseEntity<ResUpdateNewsDTO> updateNews(@RequestBody News dataNews) throws IdInvalidException {    	    
-    	News currentNews = this.newsService.fetchNewsById(dataNews.getId());
+    public ResponseEntity<ResUpdateNewsDTO> updateNews(@RequestBody News dataNews) throws IdInvalidException {
+        News currentNews = this.newsService.fetchNewsById(dataNews.getId());
         if (currentNews == null) {
             throw new IdInvalidException("Không tìm thấy bài tin tức!");
         }
-        
+
         boolean isTitleExist = this.newsService.isTitleExist(dataNews.getTitle());
         if (isTitleExist && currentNews.getTitle() == dataNews.getTitle()) {
             throw new IdInvalidException("Tiêu đề đã tồn tại, vui lòng sử dụng tiêu đề khác!");
         }
-        
+
         ResUpdateNewsDTO updateNews = this.newsService.handleUpdateNews(dataNews);
         return ResponseEntity.ok(updateNews);
     }
@@ -73,7 +73,7 @@ public class NewsController {
     public ResponseEntity<Void> deleteNews(@PathVariable("id") long id)
             throws IdInvalidException {
         if (this.newsService.fetchNewsById(id) == null) {
-        	throw new IdInvalidException("Tiêu đề không tồn tại!");
+            throw new IdInvalidException("Tiêu đề không tồn tại!");
         }
 
         this.newsService.handleDeleteNews(id);
@@ -83,11 +83,11 @@ public class NewsController {
     @GetMapping("/news/{id}")
     @ApiMessage("Fetch news by id")
     public ResponseEntity<ResFetchNewsDTO> getNewsById(@PathVariable("id") long id) throws IdInvalidException {
-    	News dataNews = this.newsService.fetchNewsById(id);
+        News dataNews = this.newsService.fetchNewsById(id);
         if (dataNews == null) {
-        	throw new IdInvalidException("Tiêu đề không tồn tại!");
+            throw new IdInvalidException("Tiêu đề không tồn tại!");
         }
-        
+
         return ResponseEntity.ok(this.newsService.convertToResNewsDTO(dataNews));
     }
 
@@ -96,6 +96,6 @@ public class NewsController {
     public ResponseEntity<ResultPaginationDTO> getNewsList(
             Pageable pageable,
             @Filter Specification<News> spec) {
-    	return ResponseEntity.ok(this.newsService.handleFetchNewsList(spec, pageable));
-    }    
+        return ResponseEntity.ok(this.newsService.handleFetchNewsList(spec, pageable));
+    }
 }
