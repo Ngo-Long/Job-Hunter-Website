@@ -16,21 +16,21 @@ public class ResFetchNewsDTO {
 
     private long id;
     private String title;
-    
+
     @Column(columnDefinition = "MEDIUMTEXT")
-    private String content;    
-    
+    private String content;
+
     private int views;
     private String author;
     private String image;
     private String category;
-    
+
     @Enumerated(EnumType.STRING)
     private NewsStateEnum status;
-    
+
     private Instant CreateAt;
     private String createdBy;
-    
+
     private Instant updatedAt;
     private String updatedBy;
 

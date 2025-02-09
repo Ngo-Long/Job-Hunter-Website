@@ -16,17 +16,17 @@ public class ResCreateNewsDTO {
 
     private long id;
     private String title;
-    
+
     @Column(columnDefinition = "MEDIUMTEXT")
-    private String content;    
-    
+    private String content;
+
     private String author;
     private String image;
     private String category;
-    
+
     @Enumerated(EnumType.STRING)
     private NewsStateEnum status;
-    
+
     private Instant CreateAt;
     private String createdBy;
 }

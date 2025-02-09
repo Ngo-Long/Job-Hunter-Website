@@ -46,7 +46,12 @@ public class SecurityConfiguration {
 
     private SecretKey getSecretKey() {
         byte[] keyBytes = Base64.from(jwtKey).decode();
-        return new SecretKeySpec(keyBytes, 0, keyBytes.length, SecurityUtil.JWT_ALGORITHM.getName());
+        return new SecretKeySpec(
+            keyBytes,
+            0,
+            keyBytes.length,
+            SecurityUtil.JWT_ALGORITHM.getName()
+        );
     }
 
     @Bean
@@ -87,46 +92,15 @@ public class SecurityConfiguration {
     /**
      * Configures a security filter chain that applies to incoming HTTP requests
      * to determine whether security should be enforced for the request.
-     *
-     * - Disables CSRF (Cross-Site Request Forgery) protection since the application
-     * may primarily expose APIs that are not susceptible to CSRF attacks.
-     * - Enables CORS (Cross-Origin Resource Sharing) to allow requests from
-     * different origins
-     * with default settings.
-     * - Configures HTTP request authorization using `authorizeHttpRequests`, which
-     * allows
-     * public access to certain paths (whitelisted) while securing other routes.
-     * - Uses `oauth2ResourceServer` with JWT support for resource protection,
-     * ensuring
-     * that users must provide valid JWT tokens to access secured resources.
-     * - Disables the default form-based login provided by Spring Security since
-     * authentication is handled via OAuth2 and JWT.
-     * - Configures session management to be stateless
-     * (`SessionCreationPolicy.STATELESS`),
-     * meaning the application does not maintain server-side sessions for each user,
-     * which is ideal for stateless REST APIs.
-     *
-     * @param http                           The HttpSecurity object used to
-     *                                       configure HTTP security settings.
-     * @param customAuthenticationEntryPoint The entry point used to handle
-     *                                       authentication errors, such as when
-     *                                       a user attempts to access a secured
-     *                                       resource
-     *                                       without proper authentication.
-     *
-     * @return SecurityFilterChain The security configuration object that defines
-     *         the filters applied to HTTP requests.
-     * @throws Exception If an error occurs during the security configuration
-     *                   process.
      */
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity http,
             CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
         String[] whiteList = {
-                "/", "/storage/**", "/v3/api-docs/**",               
+                "/", "/storage/**", "/v3/api-docs/**",
                 "/swagger-ui/**", "/swagger-ui.html",
-                "/api/v1/email/**", "/api/v1/auth/login", 
+                "/api/v1/email/**", "/api/v1/auth/login",
                 "/api/v1/auth/refresh", "/api/v1/auth/register"
         };
 

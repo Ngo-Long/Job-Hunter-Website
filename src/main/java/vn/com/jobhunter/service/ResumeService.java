@@ -119,29 +119,6 @@ public class ResumeService {
         this.resumeRepository.deleteById(id);
     }
 
-    public ResultPaginationDTO fetchAllResumes(Specification<Resume> spec, Pageable pageable) {
-        Page<Resume> pageResume = this.resumeRepository.findAll(spec, pageable);
-        ResultPaginationDTO rs = new ResultPaginationDTO();
-        ResultPaginationDTO.Meta meta = new ResultPaginationDTO.Meta();
-
-        meta.setPage(pageable.getPageNumber() + 1);
-        meta.setPageSize(pageable.getPageSize());
-
-        meta.setPages(pageResume.getTotalPages());
-        meta.setTotal(pageResume.getTotalElements());
-
-        rs.setMeta(meta);
-
-        // remove sensitive data
-        List<ResFetchResumeDTO> listResume = pageResume.getContent()
-                .stream().map(item -> this.fetchResume(item))
-                .collect(Collectors.toList());
-
-        rs.setResult(listResume);
-
-        return rs;
-    }
-
     public boolean checkExistsResume(long id) {
         return this.resumeRepository.existsById(id);
     }
@@ -201,4 +178,28 @@ public class ResumeService {
 
         return rs;
     }
+
+    public ResultPaginationDTO fetchAllResumes(Specification<Resume> spec, Pageable pageable) {
+        Page<Resume> pageResume = this.resumeRepository.findAll(spec, pageable);
+        ResultPaginationDTO rs = new ResultPaginationDTO();
+        ResultPaginationDTO.Meta meta = new ResultPaginationDTO.Meta();
+
+        meta.setPage(pageable.getPageNumber() + 1);
+        meta.setPageSize(pageable.getPageSize());
+
+        meta.setPages(pageResume.getTotalPages());
+        meta.setTotal(pageResume.getTotalElements());
+
+        rs.setMeta(meta);
+
+        // remove sensitive data
+        List<ResFetchResumeDTO> listResume = pageResume.getContent()
+                .stream().map(item -> this.fetchResume(item))
+                .collect(Collectors.toList());
+
+        rs.setResult(listResume);
+
+        return rs;
+    }
+
 }

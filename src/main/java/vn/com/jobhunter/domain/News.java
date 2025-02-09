@@ -37,18 +37,18 @@ public class News {
 
     @NotBlank(message = "Nội dung không được để trống")
     @Column(columnDefinition = "MEDIUMTEXT")
-    private String content;    
-    
+    private String content;
+
     @NotBlank(message = "Phân loại không được để trống")
     private String category;
 
     private String author;
     private String image;
     private int views;
-    
+
     @Enumerated(EnumType.STRING)
     private NewsStateEnum status;
-    
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

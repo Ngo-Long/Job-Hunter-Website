@@ -11,7 +11,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 import com.nimbusds.jose.util.Base64;
-
 import vn.com.jobhunter.domain.response.ResLoginDTO;
 
 import org.springframework.stereotype.Service;

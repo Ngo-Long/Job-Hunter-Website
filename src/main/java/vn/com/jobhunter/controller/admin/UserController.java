@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @PutMapping("/users")
-    public ResponseEntity<ResUpdateUserDTO> updateUser(@RequestBody User dataUser) throws IdInvalidException {
+    public ResponseEntity<ResUpdateUserDTO> updateUser(@Valid @RequestBody User dataUser) throws IdInvalidException {
         User updateUser = this.userService.handleUpdateUser(dataUser);
         if (updateUser == null) {
             throw new IdInvalidException("Người dùng không tồn tại!");
